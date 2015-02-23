@@ -5,8 +5,8 @@ require File.expand_path('../lib/bitmapped/version', __FILE__)
 Gem::Specification.new do |gem|
   gem.name          = "bitmapped"
   gem.version       = Bitmapped::VERSION
-  gem.summary       = %q{TODO: Summary}
-  gem.description   = %q{TODO: Description}
+  gem.summary       = %q{Bitmap CLI program}
+  gem.description   = %q{Bitmap CLI program}
   gem.license       = "MIT"
   gem.authors       = ["Ashley Connor"]
   gem.email         = "ash.connor@gmail.com"

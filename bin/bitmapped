@@ -1,0 +1,11 @@
+#!/usr/bin/env ruby
+
+require 'rubygems'
+
+begin
+  require 'bitmapped/cli'
+rescue LoadError => e
+  abort 'Could not load "bitmapped/cli"'
+end
+
+Bitmapped::Cli.start

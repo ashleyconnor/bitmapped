@@ -29,8 +29,14 @@ RDoc::Task.new do |rdoc|
 end
 task :doc => :rdoc
 
-require 'rspec/core/rake_task'
-RSpec::Core::RakeTask.new
+begin
+  require 'rspec/core/rake_task'
+  RSpec::Core::RakeTask.new
+rescue LoadError
+  task :spec do
+    abort "Please run `gem install rspec` to install RSpec."
+  end
+end
 
 task :test    => :spec
 task :default => :spec

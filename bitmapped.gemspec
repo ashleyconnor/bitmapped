@@ -9,7 +9,7 @@ Gem::Specification.new do |gem|
   gem.description   = %q{Bitmap CLI program}
   gem.license       = "MIT"
   gem.authors       = ["Ashley Connor"]
-  gem.email         = "ash.connor@gmail.com"
+  gem.email         = "ashconnor@me.com"
   gem.homepage      = "https://rubygems.org/gems/bitmapped"
 
   gem.files         = `git ls-files`.split($/)

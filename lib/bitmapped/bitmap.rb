@@ -14,7 +14,7 @@ module Bitmapped
       when "L"
         color_command(parsed_input[0], parsed_input[1], parsed_input[2])
       when "V"
-        puts "Vertical Command"
+        vertical_command(parsed_input[0], parsed_input[1], parsed_input[2], parsed_input[3])
       when "H"
         horizontal_command(parsed_input[0], parsed_input[1], parsed_input[2], parsed_input[3])
       when "F"
@@ -46,7 +46,10 @@ module Bitmapped
       end
 
       def vertical_command(column, x, y, color)
-        # vertical command
+        x = x.to_i - 1
+        y = y.to_i - 1
+        column = column.to_i - 1
+        self.pixels[x..y].each { |row| row[column] = color }
       end
 
       def horizontal_command(x, y, row, color)

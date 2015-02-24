@@ -18,7 +18,7 @@ module Bitmapped
       when "H"
         horizontal_command(parsed_input[0], parsed_input[1], parsed_input[2], parsed_input[3])
       when "F"
-        puts "Fill Command"
+        fill_command(parsed_input[0], parsed_input[1], self.pixels[parsed_input[0].to_i - 1][parsed_input[1].to_i - 1], parsed_input[2])
       when "S"
         pretty_print
       when "X"
@@ -56,11 +56,19 @@ module Bitmapped
         x = x.to_i - 1
         y = y.to_i - 1
         row = row.to_i - 1
+
+        require 'pry'; binding.pry
+
         self.pixels[row][x..y] = Array.new((x..y).size, color)
       end
 
-      def fill_command
-        # horizontal array
+      def fill_command(x, y, target_color, replacement_color)
+        queue = []
+        queue << self.pixels[x.to_i - 1][y.to_i - 1]
+
+        until queue.empty?
+          pixel = queue.shift
+        end
       end
   end
 end

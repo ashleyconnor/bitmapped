@@ -4,3 +4,4 @@ gemspec
 
 gem 'rspec'
 gem 'terminal-table'
+gem 'pry'

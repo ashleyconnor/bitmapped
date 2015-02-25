@@ -1,34 +1,44 @@
+Dir[File.join(File.dirname(__FILE__), 'validators', '*.rb')].each {|file| require file }
+
 require 'terminal-table'
+require 'bitmapped/exceptions'
 
 module Bitmapped
   class Bitmap
 
     attr_accessor :pixels, :table, :rows, :columns
 
-    def command(parsed_input)
-      case parsed_input.shift
-      when "I"
-        self.columns = parsed_input[0].to_i
-        self.rows = parsed_input[1].to_i
-        self.pixels = populate_pixels(self.columns, self.rows)
-      when "C"
-        self.pixels = populate_pixels(self.columns, self.rows)
-      when "L"
-        color_command(parsed_input[0], parsed_input[1], parsed_input[2])
-      when "V"
-        vertical_command(parsed_input[0], parsed_input[1], parsed_input[2], parsed_input[3])
-      when "H"
-        horizontal_command(parsed_input[0], parsed_input[1], parsed_input[2], parsed_input[3])
-      when "F"
-        fill_command(parsed_input[0], parsed_input[1], parsed_input[2])
-      when "S"
-        pretty_print
-      when "P"
-        print_pixel(parsed_input[0], parsed_input[1])
-      when "X"
-        raise Interrupt
-      else
-        puts "Unknown Command"
+    def command(input)
+      begin
+        case input.shift
+        when "I"
+          self.columns, self.rows = Validators::ValidateColumnRowInput.parse_and_validate(input)
+          self.pixels = populate_pixels(self.columns, self.rows)
+        when "C"
+          self.pixels = populate_pixels(self.columns, self.rows) if self.pixels
+        when "L"
+          column, row, color = Validators::ValidateFillInput.parse_and_validate(input)
+          color_command(column, row, color)
+        when "V"
+          column, start, finish, color = Validators::ValidateSegmentInput.parse_and_validate(input)
+          vertical_command(column, start, finish, color)
+        when "H"
+          start, finish, row, color = Validators::ValidateSegmentInput.parse_and_validate(input)
+          horizontal_command(start, finish, row, color)
+        when "F"
+          column, row, color = Validators::ValidateFillInput.parse_and_validate(input)
+          fill_command(column, row, color)
+        when "S"
+          puts formatted_table
+        when "X"
+          raise Interrupt
+        else
+          puts "Unknown command"
+        end
+      rescue ParsingError => e
+        puts "Invalid parameters"
+      rescue InvalidCoordinatesError => e
+        puts "Invalid co-ordinates"
       end
     end
 
@@ -37,52 +47,66 @@ module Bitmapped
         Array.new(self.rows) { Array.new(self.columns) { "0" } }
       end
 
-      def pretty_print
+      def formatted_table
         self.table ||= Terminal::Table.new
         self.table.rows = self.pixels
-        puts self.table
+        self.table
+        # self.pixels.each { |row| puts row.join('') } # no fancy table
       end
 
       def color_command(x, y, color)
-        x, y = *coordinates_to_array_indexes(x, y)
+        x, y = coordinates_to_array_indexes(x, y)
         self.pixels[y][x] = color
       end
 
       def vertical_command(column, x, y, color)
-        x, y = *coordinates_to_array_indexes(x, y)
+        x, y = coordinates_to_array_indexes(x, y)
         column = column.to_i - 1
         self.pixels[x..y].each { |row| row[column] = color }
       end
 
       def horizontal_command(x, y, row, color)
-        x, y = *coordinates_to_array_indexes(x, y)
+        x, y = coordinates_to_array_indexes(x, y)
         row = row.to_i - 1
         self.pixels[row][x..y] = Array.new((x..y).size, color)
       end
 
-      def print_pixel(x, y)
-        x, y = *coordinates_to_array_indexes(x, y)
-        puts self.pixels[x][y]
-      end
-
       def fill_command(x, y, replacement_color)
-        x, y = *coordinates_to_array_indexes(x, y)
+        x, y = coordinates_to_array_indexes(x, y)
+        valid_cooridinates(x, y)
         target_color = self.pixels[x][y]
         queue = [[x,y]]
 
         until queue.empty?
-          x, y = *queue.pop
-          next if (x > self.columns || y > self.rows) || self.pixels[x][y] != target_color
+          x, y = queue.pop
+          next if ((not [*0..self.columns].include?(x)) || (not [*0..self.rows].include?(y))) || self.pixels[x][y] != target_color
           self.pixels[x][y] = replacement_color
           queue << [x+1, y] # east
           queue << [x-1, y] # west
           queue << [x, y+1] # south
           queue << [x, y-1] # north
+
+          # and if we are doing 8-direction flood-fill...
+          # queue << [x+1, y-1] # north-east
+          # queue << [x-1, y-1] # north-west
+          # queue << [x+1, y+1] # south-east
+          # queue << [x-1, y+1] # south-west
+        end
+      end
+
+      def valid_cooridinates(x, y)
+        # require 'pry'; binding.pry
+        if (0 <= x && x <= self.columns) && (0 <= y && y <= self.rows)
+          true
+        else
+          raise InvalidCoordinatesError
         end
       end
 
       def coordinates_to_array_indexes(x, y)
-        [x.to_i - 1, y.to_i - 1]
+        x = x.to_i - 1
+        y = y.to_i - 1
+        [x, y] if valid_cooridinates(x, y)
       end
   end
 end

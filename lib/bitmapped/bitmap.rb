@@ -33,12 +33,12 @@ module Bitmapped
         when bitmap_available("S")
           puts formatted_table
         else
-          puts "Invalid command"
+          "Invalid Command"
         end
       rescue ParsingError => e
-        puts "Invalid parameters"
+        "Invalid parameters"
       rescue InvalidCoordinatesError => e
-        puts "Invalid co-ordinates"
+        "Invalid co-ordinates"
       end
     end
 
@@ -64,14 +64,16 @@ module Bitmapped
       end
 
       def vertical_command(column, x, y, color)
+        raise InvalidCoordinatesError unless (0 < column && column <= self.columns)
         x, y = coordinates_to_array_indexes(x, y)
-        column = column.to_i - 1
+        column = column - 1
         self.pixels[x..y].each { |row| row[column] = color }
       end
 
       def horizontal_command(x, y, row, color)
+        raise InvalidCoordinatesError unless (0 < row && row <= self.rows)
         x, y = coordinates_to_array_indexes(x, y)
-        row = row.to_i - 1
+        row = row - 1
         self.pixels[row][x..y] = Array.new((x..y).size, color)
       end
 
@@ -82,7 +84,7 @@ module Bitmapped
 
         until queue.empty?
           x, y = queue.pop
-          next if ((not [*0..self.columns].include?(x)) || (not [*0..self.rows].include?(y))) || self.pixels[x][y] != target_color
+          next if (!valid_cooridinates(x+1, y+1) || self.pixels[x][y] != target_color)
           self.pixels[x][y] = replacement_color
           queue << [x+1, y] # east
           queue << [x-1, y] # west
@@ -101,14 +103,18 @@ module Bitmapped
         if (0 <= x && x <= self.columns) && (0 <= y && y <= self.rows)
           true
         else
-          raise InvalidCoordinatesError
+          false
         end
       end
 
       def coordinates_to_array_indexes(x, y)
         x = x.to_i - 1
         y = y.to_i - 1
-        [x, y] if valid_cooridinates(x, y)
+        if valid_cooridinates(x, y)
+          [x, y]
+        else
+          raise InvalidCoordinatesError
+        end
       end
   end
 end

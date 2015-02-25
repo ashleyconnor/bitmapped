@@ -33,7 +33,7 @@ module Bitmapped
         when bitmap_available("S")
           puts formatted_table
         else
-          puts "Invalid command, have you initialised the Bitmap yet?"
+          puts "Invalid command"
         end
       rescue ParsingError => e
         puts "Invalid parameters"

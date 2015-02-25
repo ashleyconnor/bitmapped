@@ -8,6 +8,8 @@ module Bitmapped
       class << self
         def parse_and_validate(input)
           begin
+            raise ArgumentError unless input.size == 3
+
             columns = Integer(input[0])
             rows = Integer(input[1])
             color = ValidationHelper.parse_color(input[2].strip)

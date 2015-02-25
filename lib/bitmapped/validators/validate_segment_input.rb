@@ -7,6 +7,8 @@ module Bitmapped
       class << self
         def parse_and_validate(input)
           begin
+            raise ArgumentError unless input.size == 3
+
             segement_a = Integer(input[0])
             segement_b = Integer(input[1])
             segement_c = Integer(input[2])

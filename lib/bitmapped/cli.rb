@@ -11,7 +11,7 @@ module Bitmapped
           puts "Bitmapped Command Centre (Ctrl+C to exit):"
 
           loop do
-            input = parse_input(Readline.readline("> "))
+            input = split_input(Readline.readline("> "))
             puts bitmap.command(input)
           end
         rescue Interrupt => interrupt
@@ -20,7 +20,7 @@ module Bitmapped
         end
       end
 
-      def parse_input(input)
+      def split_input(input)
         input.strip.split(' ')
       end
     end

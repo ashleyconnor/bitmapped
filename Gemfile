@@ -2,6 +2,11 @@ source "https://rubygems.org"
 
 gemspec
 
-gem 'rspec'
 gem 'terminal-table'
-gem 'pry-byebug'
+
+group :test do
+  gem 'rake'
+  gem 'rspec'
+  gem 'pry-byebug'
+  gem 'simplecov'
+end

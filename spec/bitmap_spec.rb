@@ -6,9 +6,9 @@ describe Bitmap do
 
   subject { Bitmap.new }
 
-  shared_examples_for "a command requiring a bitmap" do |arg|
+  shared_examples_for "a command requiring an initialised bitmap" do |arg|
     it "returns an error message" do
-      expect(subject.command([arg])).to eq("Invalid Command")
+      expect(subject.command([arg])).to eq("Bitmap has not been initialised")
     end
   end
 
@@ -48,7 +48,7 @@ describe Bitmap do
   end
 
   describe 'the C command' do
-    it_should_behave_like "a command requiring a bitmap", "C"
+    it_should_behave_like "a command requiring an initialised bitmap", "C"
 
     context 'when the bitmap is initialised' do
       it 'replaces all of the bitmap colors with "0"' do
@@ -62,10 +62,10 @@ describe Bitmap do
   end
 
   describe 'the L command' do
-    it_should_behave_like "a command requiring a bitmap", "L"
+    it_should_behave_like "a command requiring an initialised bitmap", "L"
 
     context 'when the bitmap is initialised' do
-      before(:each) do
+      before(:example) do
         setup_pixels(subject, 3, 2)
       end
 
@@ -84,10 +84,10 @@ describe Bitmap do
   end
 
   describe 'the V command' do
-    it_should_behave_like "a command requiring a bitmap", "V"
+    it_should_behave_like "a command requiring an initialised bitmap", "V"
 
     context 'when the bitmap is initialised' do
-      before(:each) do
+      before(:example) do
         setup_pixels(subject, 4, 4)
       end
 
@@ -117,10 +117,10 @@ describe Bitmap do
   end
 
   describe 'the H command' do
-    it_should_behave_like "a command requiring a bitmap", "H"
+    it_should_behave_like "a command requiring an initialised bitmap", "H"
 
     context 'when the bitmap is initialised' do
-      before(:each) do
+      before(:example) do
         setup_pixels(subject, 4, 4)
       end
 
@@ -150,11 +150,11 @@ describe Bitmap do
   end
 
   describe 'the F command' do
-    it_should_behave_like "a command requiring a bitmap", "F"
+    it_should_behave_like "a command requiring an initialised bitmap", "F"
 
     context 'when the bitmap is initialised' do
 
-      before(:each) do
+      before(:example) do
         setup_pixels(subject, 4, 4)
       end
 
@@ -164,6 +164,40 @@ describe Bitmap do
                                       ["J","J","J","J"],
                                       ["J","J","J","J"],
                                       ["J","J","J","J"]])
+      end
+    end
+  end
+
+  describe 'the S command' do
+    it_should_behave_like "a command requiring an initialised bitmap", "S"
+
+    context 'when the bitmap is initialised' do
+      before(:example) do
+        setup_pixels(subject, 4, 4)
+      end
+
+      let(:formatted_table) { %{+---+---+---+---+
+                                | 0 | 0 | 0 | 0 |
+                                | 0 | 0 | 0 | 0 |
+                                | 0 | 0 | 0 | 0 |
+                                | 0 | 0 | 0 | 0 |
+                                +---+---+---+---+}.gsub(/[^\S\n]{2,}/, '')}
+
+      let(:filled_formatted_table) {%{+---+---+---+---+
+                                      | J | J | J | J |
+                                      | J | J | J | J |
+                                      | J | J | J | J |
+                                      | J | J | J | J |
+                                      +---+---+---+---+}.gsub(/[^\S\n]{2,}/, '')}
+
+      it 'should output a formatted table' do
+        expect(subject.command(["S"]).to_s).to eq(formatted_table)
+      end
+
+      it 'should output a correctly formatted table after fill command' do
+        subject.command(["F", "3", "3", "J"])
+
+        expect(subject.command(["S"]).to_s).to eq(filled_formatted_table)
       end
     end
   end

@@ -31,7 +31,9 @@ module Bitmapped
           column, row, color = Validators::ValidateFillInput.parse_and_validate(input)
           fill_command(column, row, color)
         when bitmap_available("S")
-          puts formatted_table
+          formatted_table
+        when "C", "L", "V", "H", "F", "S"
+          "Bitmap has not been initialised, run command I with valid arguments"
         else
           "Invalid Command"
         end
@@ -55,7 +57,7 @@ module Bitmapped
         self.table ||= Terminal::Table.new
         self.table.rows = self.pixels
         self.table
-        # self.pixels.each { |row| puts row.join('') } # no fancy table
+        # self.pixels.each { |row| puts row.join("") } # no fancy table
       end
 
       def color_command(x, y, color)

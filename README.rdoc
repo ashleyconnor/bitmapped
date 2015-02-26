@@ -1,27 +1,62 @@
-= bitmapped
+# bitmapped
 
-* {Homepage}[https://rubygems.org/gems/bitmapped]
-* {Documentation}[http://rubydoc.info/gems/bitmapped/frames]
-* {Email}[mailto:ash.connor at gmail.com]
+[![Code Climate](https://codeclimate.com/github/ashleyconnor/bitmapped/badges/gpa.svg)](https://codeclimate.com/github/ashleyconnor/bitmapped) [![Build Status](https://travis-ci.org/ashleyconnor/bitmapped.svg)](https://travis-ci.org/ashleyconnor/bitmapped)
 
-== Description
+## Description
 
-TODO: Description
+Bitmapped is an command-line editor which allows you to create and edit bitmap-like text images.
 
-== Features
+## Features
 
-== Examples
+Bitmapped accepts various commands to create and edit bitmap-like text images:
 
-  require 'bitmapped'
+| Command             | Description                                                | Key | Parameters                          |
+|---------------------|------------------------------------------------------------|-----|-------------------------------------|
+| Initiate Bitmap     | Initiates a Bitmap of the given size                       | I   | Columns:Int, Rows:Int               |
+| Clear               | Clears the Bitmap setting all cells to "0"                 | C   |                                     |
+| Color Cell          | Colors the cell at the given co-ordinates                  | L   | Column:Int Row:Int Color:String     |
+| Vertically Line     | Colors multiple cells on specified column between rows X Y | V   | Column:Int Row:X Row:Y Color:String |
+| Horizontal Line     | Colors multiple cells on specified row between rows X Y    | H   | Row:X Row:Y Row:Int Color:String    |
+| Fill (Paint Bucket) | Fills a given cell and surrounding cells of the same color | F   | Column:Int Row:Int Color:String     |
+| Exit                | Exits the CLI program                                      | X   |                                     |
 
-== Requirements
 
-== Install
+## Examples
+    bundle exec bitmapped
+    > I 5 6
+    > L 2 3 A
+    > S
+    +---+---+---+---+---+
+    | 0 | 0 | 0 | 0 | 0 |
+    | 0 | 0 | 0 | 0 | 0 |
+    | 0 | 0 | 0 | 0 | 0 |
+    | 0 | 0 | 0 | 0 | 0 |
+    | 0 | 0 | 0 | 0 | 0 |
+    | 0 | 0 | 0 | 0 | 0 |
+    +---+---+---+---+---+
+    > F 3 3 J
+    > V 2 3 4 W
+    > H 3 4 2 Z
+    > S
+    +---+---+---+---+---+
+    | J | J | J | J | J |
+    | J | J | Z | Z | J |
+    | J | W | J | J | J |
+    | J | W | J | J | J |
+    | J | J | J | J | J |
+    | J | J | J | J | J |
+    +---+---+---+---+---+
 
-  $ gem install bitmapped
+## Requirements
+    Ruby 2.0+
+## Install
 
-== Copyright
+    $ gem install bitmapped
 
-Copyright (c) 2015 Ashley Connor
+## TODO
+
+### Copyright
+
+Copyright (c) 2015 **Ashley Connor**
 
 See LICENSE.txt for details.

@@ -6,6 +6,8 @@ require 'bitmapped/exceptions'
 module Bitmapped
   class Bitmap
 
+    ALPHABET = [*'A'..'Z']
+
     attr_accessor :pixels, :table, :rows, :columns
 
     def command(input)
@@ -32,7 +34,13 @@ module Bitmapped
           fill_command(column, row, color)
         when bitmap_available("S")
           formatted_table
-        when "C", "L", "V", "H", "F", "S"
+        when bitmap_available("R")
+          self.pixels = rotate_command
+        when bitmap_available("M")
+          self.pixels = mirror_command
+        when bitmap_available("N")
+          self.pixels = invert_command
+        when "C", "L", "V", "H", "F", "S", "R", "M", "N"
           "Bitmap has not been initialised, run command 'I' with valid arguments"
         else
           "Invalid Command"
@@ -99,6 +107,24 @@ module Bitmapped
           # queue << [x+1, y+1] # south-east
           # queue << [x-1, y+1] # south-west
         end
+      end
+
+      def rotate_command
+        self.pixels.transpose.map &:reverse
+      end
+
+      def mirror_command
+        self.pixels.collect { |row| row.reverse }
+      end
+
+      def invert_command
+        self.pixels.each_with_index do |row, index|
+          pixels[index] = row.collect{ |color| invert_color(color) }
+        end
+      end
+
+      def invert_color(color)
+        ALPHABET[-(ALPHABET.index(color)+1)]
       end
 
       def valid_cooridinates(x, y)

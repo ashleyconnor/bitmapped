@@ -176,6 +176,36 @@ describe Bitmap do
         setup_pixels(subject, 4, 4)
       end
 
+      let(:formatted_table) { %{0000
+                                0000
+                                0000
+                                0000}.gsub(/[^\S\n]{2,}/, '')}
+
+      let(:filled_formatted_table) {%{JJJJ
+                                      JJJJ
+                                      JJJJ
+                                      JJJJ}.gsub(/[^\S\n]{2,}/, '')}
+
+      it 'should output a formatted table' do
+        expect(subject.command(["S"]).to_s).to eq(formatted_table)
+      end
+
+      it 'should output a correctly formatted table after fill command' do
+        subject.command(["F", "3", "3", "J"])
+
+        expect(subject.command(["S"]).to_s).to eq(filled_formatted_table)
+      end
+    end
+  end
+
+  describe 'the T command' do
+    it_should_behave_like "a command requiring an initialised bitmap", "T"
+
+    context 'when the bitmap is initialised' do
+      before(:example) do
+        setup_pixels(subject, 4, 4)
+      end
+
       let(:formatted_table) { %{+---+---+---+---+
                                 | 0 | 0 | 0 | 0 |
                                 | 0 | 0 | 0 | 0 |
@@ -191,13 +221,80 @@ describe Bitmap do
                                       +---+---+---+---+}.gsub(/[^\S\n]{2,}/, '')}
 
       it 'should output a formatted table' do
-        expect(subject.command(["S"]).to_s).to eq(formatted_table)
+        expect(subject.command(["T"]).to_s).to eq(formatted_table)
       end
 
       it 'should output a correctly formatted table after fill command' do
         subject.command(["F", "3", "3", "J"])
 
-        expect(subject.command(["S"]).to_s).to eq(filled_formatted_table)
+        expect(subject.command(["T"]).to_s).to eq(filled_formatted_table)
+      end
+    end
+  end
+
+  describe 'the rotate command' do
+    it_should_behave_like "a command requiring an initialised bitmap", "R"
+
+    context 'when the bitmap is initialised' do
+      before(:example) do
+        setup_pixels(subject, 4, 4)
+      end
+
+      it 'should rotate the bitmap 90 degrees clockwise' do
+        subject.command(["H", "1", "4", "1", "X"])
+        subject.command(["H", "1", "4", "4", "Z"])
+        subject.command(["R"])
+
+        expect(subject.pixels).to eq([["Z","0","0","X"],
+                                      ["Z","0","0","X"],
+                                      ["Z","0","0","X"],
+                                      ["Z","0","0","X"]])
+      end
+    end
+  end
+
+  describe 'the mirror command' do
+    it_should_behave_like "a command requiring an initialised bitmap", "M"
+
+    context 'when the bitmap is initialised' do
+      before(:example) do
+        setup_pixels(subject, 4, 4)
+      end
+
+      it 'should mirror the bitmap on the vertical axis' do
+        subject.command(["H", "1", "4", "1", "W"])
+        subject.command(["H", "1", "4", "4", "X"])
+        subject.command(["V", "1", "1", "4", "Y"])
+        subject.command(["V", "4", "1", "4", "Z"])
+        subject.command(["M"])
+
+        expect(subject.pixels).to eq([["Z","W","W","Y"],
+                                      ["Z","0","0","Y"],
+                                      ["Z","0","0","Y"],
+                                      ["Z","X","X","Y"]])
+      end
+    end
+  end
+
+  describe 'the invert command' do
+    it_should_behave_like "a command requiring an initialised bitmap", "N"
+
+    context 'when the bitmap is initialised' do
+      before(:example) do
+        setup_pixels(subject, 4, 4)
+      end
+
+      it 'should mirror the bitmap on the vertical axis' do
+        subject.command(["H", "1", "4", "1", "W"])
+        subject.command(["H", "1", "4", "4", "X"])
+        subject.command(["V", "1", "1", "4", "Y"])
+        subject.command(["V", "4", "1", "4", "Z"])
+        subject.command(["N"])
+
+        expect(subject.pixels).to eq([["B","D","D","A"],
+                                      ["B","0","0","A"],
+                                      ["B","0","0","A"],
+                                      ["B","C","C","A"]])
       end
     end
   end

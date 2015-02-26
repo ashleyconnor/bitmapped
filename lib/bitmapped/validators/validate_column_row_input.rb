@@ -10,6 +10,7 @@ module Bitmapped
 
             columns = Integer(input[0])
             rows = Integer(input[1])
+
             [columns, rows]
           rescue ArgumentError => ae
             raise ParsingError

@@ -18,7 +18,7 @@ Bitmapped accepts various commands to create and edit bitmap-like text images:
 | Vertically Line     | Colors multiple cells on specified column between rows X Y | V   | Column:Int, Row:X, Row:Y, Color:String |
 | Horizontal Line     | Colors multiple cells on specified row between rows X Y    | H   | Row:X, Row:Y, Row:Int, Color:String    |
 | Fill (Paint Bucket) | Fills a given cell and surrounding cells of the same color | F   | Column:Int, Row:Int, Color:String      |
-| Exit                | Exits the CLI program                                      | X   |                                        |
+| Exit                | Exits the program                                          | X   |                                        |
 
 
 ## Examples

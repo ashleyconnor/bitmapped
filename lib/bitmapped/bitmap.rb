@@ -33,7 +33,7 @@ module Bitmapped
         when bitmap_available("S")
           formatted_table
         when "C", "L", "V", "H", "F", "S"
-          "Bitmap has not been initialised, run command I with valid arguments"
+          "Bitmap has not been initialised, run command 'I' with valid arguments"
         else
           "Invalid Command"
         end

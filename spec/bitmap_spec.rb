@@ -8,7 +8,7 @@ describe Bitmap do
 
   shared_examples_for "a command requiring an initialised bitmap" do |arg|
     it "returns an error message" do
-      expect(subject.command([arg])).to eq("Bitmap has not been initialised")
+      expect(subject.command([arg])).to eq("Bitmap has not been initialised, run command 'I' with valid arguments")
     end
   end
 

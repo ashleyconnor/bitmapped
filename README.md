@@ -18,6 +18,11 @@ Bitmapped accepts various commands to create and edit bitmap-like text images:
 | Vertically Line     | Colors multiple cells on specified column between rows X Y | V   | Column:Int, Row:X, Row:Y, Color:String |
 | Horizontal Line     | Colors multiple cells on specified row between rows X Y    | H   | Row:X, Row:Y, Row:Int, Color:String    |
 | Fill (Paint Bucket) | Fills a given cell and surrounding cells of the same color | F   | Column:Int, Row:Int, Color:String      |
+| Show Table      | Displays the table on the CLI                                   | S   |                                        |
+| Show Pretty Table      | Displays a pretty table on the CLI                                   | T   |                                        |
+| Mirror          | Mirrors the image along the vertical axis                       | M   |                                        |
+| Rotate          | Rotates the image 90 degrees clockwise                          | R   |                                        |
+| Invert          | Inverts image swapping colors with opposites (Z>A, Y>B, X>C etc)| R   |                                        |
 | Exit                | Exits the program                                          | X   |                                        |
 
 
@@ -26,26 +31,51 @@ Bitmapped accepts various commands to create and edit bitmap-like text images:
     > I 5 6
     > L 2 3 A
     > S
-    +---+---+---+---+---+
-    | 0 | 0 | 0 | 0 | 0 |
-    | 0 | 0 | 0 | 0 | 0 |
-    | 0 | 0 | 0 | 0 | 0 |
-    | 0 | 0 | 0 | 0 | 0 |
-    | 0 | 0 | 0 | 0 | 0 |
-    | 0 | 0 | 0 | 0 | 0 |
-    +---+---+---+---+---+
+    OOOOO
+    OOOOO
+    OAOOO
+    OOOOO
+    OOOOO
+    OOOOO
     > F 3 3 J
     > V 2 3 4 W
     > H 3 4 2 Z
     > S
-    +---+---+---+---+---+
-    | J | J | J | J | J |
-    | J | J | Z | Z | J |
-    | J | W | J | J | J |
-    | J | W | J | J | J |
-    | J | J | J | J | J |
-    | J | J | J | J | J |
-    +---+---+---+---+---+
+    JJJJJ
+    JJZZJ
+    JWJJJ
+    JWJJJ
+    JJJJJ
+    JJJJJ
+    > R
+    > S
+    JJJJJJ
+    JJWWJJ
+    JJJJZJ
+    JJJJZJ
+    JJJJJJ
+    > M
+    > S
+    JJJJJJ
+    JJWWJJ
+    JZJJJJ
+    JZJJJJ
+    JJJJJJ
+    > N
+    > S
+    QQQQQQ
+    QQDDQQ
+    QAQQQQ
+    QAQQQQ
+    QQQQQQ
+    > T
+    +---+---+---+---+---+---+
+    | Q | Q | Q | Q | Q | Q |
+    | Q | Q | D | D | Q | Q |
+    | Q | A | Q | Q | Q | Q |
+    | Q | A | Q | Q | Q | Q |
+    | Q | Q | Q | Q | Q | Q |
+    +---+---+---+---+---+---+
 
 ## Requirements
     Ruby 2.0+
@@ -55,8 +85,7 @@ Bitmapped accepts various commands to create and edit bitmap-like text images:
 
 ## TODO
 
-* Custom commands
-* Refactor Bitmap commands into objects with tests
+* Refactor tests
 
 ### Copyright
 

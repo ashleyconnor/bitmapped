@@ -1,3 +1,8 @@
+# Since the refactoring this is more intergration test than unit test
+# I'm going to leave this as is but if I had time it would be broken
+# into indidual command unit tests, with all operations done in a few
+# integration tests
+
 require 'spec_helper'
 
 require 'bitmapped/bitmap'

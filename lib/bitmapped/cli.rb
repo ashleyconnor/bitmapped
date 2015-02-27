@@ -12,7 +12,7 @@ module Bitmapped
 
           loop do
             input = split_input(Readline.readline("> "))
-            puts bitmap.command(input)
+            bitmap.command(input)
           end
         rescue Interrupt => interrupt
           puts "\nExiting..."

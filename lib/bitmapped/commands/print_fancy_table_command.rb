@@ -12,6 +12,7 @@ module Bitmapped
         Validators::ValidateBitmapInitialised.parse_and_validate(bitmap)
         bitmap.table ||= Terminal::Table.new
         bitmap.table.rows = bitmap.pixels
+        puts bitmap.table
         bitmap.table
       end
     end

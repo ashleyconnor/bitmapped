@@ -10,7 +10,9 @@ module Bitmapped
 
       def process_command(bitmap, input)
         Validators::ValidateBitmapInitialised.parse_and_validate(bitmap)
-        bitmap.pixels.collect { |row| row.join("") }.join("\n")
+        table = bitmap.pixels.collect { |row| row.join("") }.join("\n")
+        puts table
+        table
       end
     end
   end

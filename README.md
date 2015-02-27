@@ -22,7 +22,7 @@ Bitmapped accepts various commands to create and edit bitmap-like text images:
 | Show Pretty Table      | Displays a pretty table on the CLI                                   | T   |                                        |
 | Mirror          | Mirrors the image along the vertical axis                       | M   |                                        |
 | Rotate          | Rotates the image 90 degrees clockwise                          | R   |                                        |
-| Invert          | Inverts image swapping colors with opposites (Z>A, Y>B, X>C etc)| R   |                                        |
+| Invert          | Inverts image swapping colors with opposites (Z>A, Y>B, X>C etc)| N   |                                        |
 | Exit                | Exits the program                                          | X   |                                        |
 
 

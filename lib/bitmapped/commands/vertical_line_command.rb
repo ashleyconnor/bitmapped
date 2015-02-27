@@ -1,3 +1,4 @@
+require 'bitmapped/commands/base_command'
 require 'bitmapped/exceptions'
 
 module Bitmapped

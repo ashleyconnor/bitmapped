@@ -1,3 +1,5 @@
+require 'bitmapped/commands/base_command'
+
 require 'terminal-table'
 
 module Bitmapped

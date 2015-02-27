@@ -1,3 +1,5 @@
+require 'bitmapped/commands/base_command'
+
 module Bitmapped
   module Commands
     class ExitCommand < BaseCommand

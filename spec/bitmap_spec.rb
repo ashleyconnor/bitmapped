@@ -13,11 +13,13 @@ describe Bitmap do
   end
 
   describe 'the I command' do
+    let(:args) { ["I", "2", "3"] }
+    let(:second_args) { ["I", "3", "2"] }
+
     it 'initializes a grid of that size' do
-      args = ["I", "2", "3"]
-      pixels = [["0", "0"],
-                ["0", "0"],
-                ["0", "0"]]
+      pixels = [["O", "O"],
+                ["O", "O"],
+                ["O", "O"]]
 
       subject.command(args)
 
@@ -27,12 +29,10 @@ describe Bitmap do
     end
 
     it 'overwrites the old bitmap given the I command again' do
-      first_args = ["I", "2", "3"]
-      second_args = ["I", "3", "2"]
-      pixels = [["0", "0", "0"],
-                ["0", "0", "0"]]
+      pixels = [["O", "O", "O"],
+                ["O", "O", "O"]]
 
-      subject.command(first_args)
+      subject.command(args)
       subject.command(second_args)
 
       expect(subject.columns).to eq(3)
@@ -55,8 +55,8 @@ describe Bitmap do
         setup_pixels(subject, 3, 2, "X")
         subject.command(["C"])
 
-        expect(subject.pixels).to eq([["0", "0", "0"],
-                                      ["0", "0", "0"]])
+        expect(subject.pixels).to eq([["O", "O", "O"],
+                                      ["O", "O", "O"]])
       end
     end
   end
@@ -73,8 +73,8 @@ describe Bitmap do
         subject.command(["L", "1", "2", "Z"])
         subject.command(["L", "2", "1", "Z"])
 
-        expect(subject.pixels).to eq([["0", "Z", "0"],
-                                      ["Z", "0", "0"]])
+        expect(subject.pixels).to eq([["O", "Z", "O"],
+                                      ["Z", "O", "O"]])
       end
 
       it 'returns an error when the coordinates are not valid' do
@@ -95,10 +95,10 @@ describe Bitmap do
         subject.command(["V", "3", "2", "4", "X"])
         subject.command(["V", "1", "1", "3", "Z"])
 
-        expect(subject.pixels).to eq([["Z","0","0","0"],
-                                      ["Z","0","X","0"],
-                                      ["Z","0","X","0"],
-                                      ["0","0","X","0"]]
+        expect(subject.pixels).to eq([["Z","O","O","O"],
+                                      ["Z","O","X","O"],
+                                      ["Z","O","X","O"],
+                                      ["O","O","X","O"]]
           )
       end
 
@@ -128,9 +128,9 @@ describe Bitmap do
         subject.command(["H", "2", "4", "2", "X"])
         subject.command(["H", "1", "4", "4", "Z"])
 
-        expect(subject.pixels).to eq([["0","0","0","0"],
-                                      ["0","X","X","X"],
-                                      ["0","0","0","0"],
+        expect(subject.pixels).to eq([["O","O","O","O"],
+                                      ["O","X","X","X"],
+                                      ["O","O","O","O"],
                                       ["Z","Z","Z","Z"]]
           )
       end
@@ -176,10 +176,10 @@ describe Bitmap do
         setup_pixels(subject, 4, 4)
       end
 
-      let(:formatted_table) { %{0000
-                                0000
-                                0000
-                                0000}.gsub(/[^\S\n]{2,}/, '')}
+      let(:formatted_table) { %{OOOO
+                                OOOO
+                                OOOO
+                                OOOO}.gsub(/[^\S\n]{2,}/, '')}
 
       let(:filled_formatted_table) {%{JJJJ
                                       JJJJ
@@ -207,10 +207,10 @@ describe Bitmap do
       end
 
       let(:formatted_table) { %{+---+---+---+---+
-                                | 0 | 0 | 0 | 0 |
-                                | 0 | 0 | 0 | 0 |
-                                | 0 | 0 | 0 | 0 |
-                                | 0 | 0 | 0 | 0 |
+                                | O | O | O | O |
+                                | O | O | O | O |
+                                | O | O | O | O |
+                                | O | O | O | O |
                                 +---+---+---+---+}.gsub(/[^\S\n]{2,}/, '')}
 
       let(:filled_formatted_table) {%{+---+---+---+---+
@@ -245,10 +245,10 @@ describe Bitmap do
         subject.command(["H", "1", "4", "4", "Z"])
         subject.command(["R"])
 
-        expect(subject.pixels).to eq([["Z","0","0","X"],
-                                      ["Z","0","0","X"],
-                                      ["Z","0","0","X"],
-                                      ["Z","0","0","X"]])
+        expect(subject.pixels).to eq([["Z","O","O","X"],
+                                      ["Z","O","O","X"],
+                                      ["Z","O","O","X"],
+                                      ["Z","O","O","X"]])
       end
     end
   end
@@ -269,8 +269,8 @@ describe Bitmap do
         subject.command(["M"])
 
         expect(subject.pixels).to eq([["Z","W","W","Y"],
-                                      ["Z","0","0","Y"],
-                                      ["Z","0","0","Y"],
+                                      ["Z","O","O","Y"],
+                                      ["Z","O","O","Y"],
                                       ["Z","X","X","Y"]])
       end
     end
@@ -292,14 +292,14 @@ describe Bitmap do
         subject.command(["N"])
 
         expect(subject.pixels).to eq([["B","D","D","A"],
-                                      ["B","0","0","A"],
-                                      ["B","0","0","A"],
+                                      ["B","L","L","A"],
+                                      ["B","L","L","A"],
                                       ["B","C","C","A"]])
       end
     end
   end
 
-  def setup_pixels(subject, columns, rows, color="0")
+  def setup_pixels(subject, columns, rows, color="O")
     subject.columns = columns
     subject.rows = rows
     subject.pixels = Array.new(rows) { Array.new(columns) { color } }

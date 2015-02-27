@@ -17,7 +17,6 @@ module Bitmapped
 
       private
         def invert_color(color)
-          return "0" if color == "0" # make an exception for starting state
           ALPHABET[-(ALPHABET.index(color)+1)]
         end
     end

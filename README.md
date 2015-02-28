@@ -1,6 +1,6 @@
 # bitmapped
 
-[![Code Climate](https://codeclimate.com/github/ashleyconnor/bitmapped/badges/gpa.svg)](https://codeclimate.com/github/ashleyconnor/bitmapped) [![Build Status](https://travis-ci.org/ashleyconnor/bitmapped.svg)](https://travis-ci.org/ashleyconnor/bitmapped)
+[![Code Climate](https://codeclimate.com/github/ashleyconnor/bitmapped/badges/gpa.svg)](https://codeclimate.com/github/ashleyconnor/bitmapped) [![Build Status](https://travis-ci.org/ashleyconnor/bitmapped.svg)](https://travis-ci.org/ashleyconnor/bitmapped) [![Gem Version](https://badge.fury.io/rb/bitmapped.svg)](http://badge.fury.io/rb/bitmapped)
 
 ## Description
 
@@ -27,7 +27,7 @@ Bitmapped accepts various commands to create and edit bitmap-like text images:
 
 
 ## Examples
-    bundle exec bitmapped
+    bitmapped
     > I 5 6
     > L 2 3 A
     > S

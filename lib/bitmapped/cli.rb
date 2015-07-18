@@ -14,7 +14,7 @@ module Bitmapped
             input = split_input(Readline.readline("> "))
             bitmap.command(input)
           end
-        rescue Interrupt => interrupt
+        rescue Interrupt
           puts "\nExiting..."
           exit
         end

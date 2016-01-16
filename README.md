@@ -1,7 +1,6 @@
 # bitmapped
 
-[![Code Climate](https://codeclimate.com/github/ashleyconnor/bitmapped/badges/gpa.svg)](https://codeclimate.com/github/ashleyconnor/bitmapped) [![Build Status](https://travis-ci.org/ashleyconnor/bitmapped.svg)](https://travis-ci.org/ashleyconnor/
-bitmapped) [![Build Status](https://drone.io/github.com/ashleyconnor/bitmapped/status.png)](https://drone.io/github.com/ashleyconnor/bitmapped/latest) [![Gem Version](https://badge.fury.io/rb/bitmapped.svg)](http://badge.fury.io/rb/bitmapped)
+[![Code Climate](https://codeclimate.com/github/ashleyconnor/bitmapped/badges/gpa.svg)](https://codeclimate.com/github/ashleyconnor/bitmapped) [![Build Status](https://travis-ci.org/ashleyconnor/bitmapped.svg)](https://travis-ci.org/ashleyconnor/bitmapped) [![Build Status](https://drone.io/github.com/ashleyconnor/bitmapped/status.png)](https://drone.io/github.com/ashleyconnor/bitmapped/latest) [![Gem Version](https://badge.fury.io/rb/bitmapped.svg)](http://badge.fury.io/rb/bitmapped)
 
 ## Description
 

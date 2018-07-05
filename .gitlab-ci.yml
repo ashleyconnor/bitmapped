@@ -1,0 +1,13 @@
+image: ruby:2.3-alpine
+
+cache:
+  paths:
+    - vendor/
+
+before_script:
+  - bundle install
+
+test:
+  stage: test
+  script:
+    - bundle exec rspec
